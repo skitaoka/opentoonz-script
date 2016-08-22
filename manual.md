@@ -160,6 +160,7 @@ view(outLevel);
 | `scene.load(filename)` | `filename` (`String`) のシーンを読み込む |
 | `scene.save(filename)` | `filename` (`String`) にシーンを保存する |
 | `scene.setCel(row, col, cell)` | タイムシートの `row` 行 `col` 列にセルを設定する。`cell` は、レベル `level` (`Level`) とその中の フレーム番号 `fid` (整数) をプロパティとしてもつ `Object`。削除したいときは、`cell` に `undefined` を指定する |
+| `scene.setCel(row, col, level, frameId)` | タイムシートの `row` 行 `col` 列にセルを設定する |
 | `scene.getCel(row, col)` | タイムシートの `row` 行 `col` 列のセルを取得する |
 | `scene.insertColumn(col)` | タイムシートに `col` 列を追加する |
 | `scene.deleteColumn(col)` | タイムシートの `col` 列を削除する |
