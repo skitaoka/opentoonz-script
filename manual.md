@@ -53,11 +53,37 @@ run("hello.js")
 | `path.exists` | パスで表現するファイルかディレクトリが存在するか | Read Only |
 | `path.isDirectory` | パスがディレクトリを指しているか | Read Only |
 
+#### サンプル
+
+```math
+rootPath = new FilePath("c:/Users/usernam");
+files = rootPath.files();
+for (var i in files) {
+    print(files[i]);
+}
+
+file = rootPath.concat("tests").concat("filename.0001.tif);
+print(file.extension);        //=> tif
+print(file.name);             //=> filename
+print(file.parentDirectory);  //=> filename
+if (file.exists) {
+  print("the file", file, "exists");
+
+  date = new Date().getTime() - file.lastModified.getTime();
+  date.setDate(date.getDate() - 1);
+  if (file.lastModified >= date) {
+      print("the file modified in the last 24 hours");
+  }
+} else {
+  print("the file", file, "does not exists");
+}
+```
+
 ### `Image`
 
 画像を表現するオブジェクト。
 `tlv`、`pli` あるいは一般の画像ファイルを扱える。
-`view(image)` (画像用の `print()` みたいなもの) で可視化できる。
+`view(image)` (画像用の `print()` みたいなもの) で内容を表示できる。
 
 | メソッド | 内容 |
 | --- | --- |
@@ -73,11 +99,22 @@ run("hello.js")
 | `image.dpi` | DPI (`pli` のときは `0` となる) | Read Only |
 | `image.type` | 画像タイプ: `"Empty"` or `"Raster"` or `"ToonzRaster"` or `"Vector"` | Read Only |
 
+#### サンプル
+
+```math
+image = new Image("c:/path/to/images/A.0003.tif");
+print(image.width, image.height, image.dpi);
+view(image);
+
+image = new Image("c:/path/to/image/A.pli"); // 最初のフレームだけ読み込まれる
+view(image);
+```
+
 ### `Level`
 
 レベル (`Image` を複数含む) を表現するオブジェクト。
 `tlv`、`pli` あるいは一般の画像ファイルを扱える。
-`view(level)` で可視化できる。
+`view(level)` で内容を表示できる。
 
 | メソッド | 内容 |
 | --- | --- |
@@ -96,6 +133,19 @@ run("hello.js")
 | `level.path` | ファイルパス | Read / Write |
 | `level.frameCount` | フレーム数 | Read Only |
 | `level.type` | レベルタイプ: `"Empty"` or `"Raster"` or `"ToonzRaster"` or `"Vector"` | Read Only |
+
+#### サンプル
+
+```math
+// 逆順にする
+inLevel = new Level("c:/path/to/images/A.pli");
+outLevel = new Level();
+for (var i = 0, fids = inLevel.getFrameIds(); i < fids.length; i++) {
+    outLevel.setFrame(fids[i], inLevel.getFrame(fids[fids.length - 1 - i]));
+}
+outLevel.save("c:/path/to/images/A.pli");
+view(outLevel);
+```
 
 ### `Scene`
 
@@ -120,6 +170,24 @@ run("hello.js")
 | `scene.frameCount` | タイムシートの行数 | Read Only |
 | `scene.columnCount` | タイムシートの列数 | Read Only |
 
+#### サンプル
+
+```
+// A,B,C のレベルを並べた新規シーンを作る
+scene = new Scene();
+
+var levelNames = ["A", "B", "C"];
+for (var col = 0; col < levelNames.length; col++) {
+    level = scene.load(levelNames[col], "c:/path/to/images/" + levelNames[col] + ".pli");
+    fids = level.getFrameIds();
+    for (var row = 0; row < fids.length; row++) {
+        scene.setCeill(row, col, level.fids[i]);
+    }
+}
+
+scene.save("c:/path/to/scenes/test.tnz");
+```
+
 ### `Transform`
 
 幾何変換を表現するオブジェクト。
@@ -131,6 +199,14 @@ run("hello.js")
 | `transform.rotate(degrees)` | `transform` を `degree` だけ回転変換する `Transform` を返す |
 | `transform.scale(s)` | `transform` を `s` だけ拡大縮小する `Transform` を返す |
 | `transform.scale(sx, sy)` | `transform` を `(sx, sy)` だけ拡大縮小する `Transform` を返す |
+
+
+#### サンプル
+
+```
+transform = new Transform().rotate(45).translate(10, 2);
+print(transform)
+```
 
 ### `ImageBuilder`
 
@@ -147,6 +223,24 @@ run("hello.js")
 | 属性 | 内容 |
 | --- | --- |
 | `builder.image` | 結果画像 |
+
+#### サンプル
+
+```
+builder = new ImageBuilder(800, 800);
+
+image = new Image("c:/path/to/images/A.0001.tif");
+scale = 1;
+phi = 0;
+for (var i = 0; i <= 20; i++) {
+    transform = new Transform().scale(scale).translate(0, -200).rotate(phi);
+    builder.add(image, transform);
+    phi -= scale * 30;
+    scale *= 0.9;
+}
+
+view(builder.image);
+```
 
 ### `OutlineVectorizer`
 
@@ -169,7 +263,17 @@ run("hello.js")
 | `v.transparentColor` | 抜き色 | 
 | `v.toneThreshold` | 閾値 |
 
-### `CenterlineVectorizer `
+#### サンプル
+
+```
+a = new Image("c:/path/to/images/A.tif");
+
+v = new OutlineVectorizer();
+v.preservePaintedAreas = true;
+view(v.vectorize(a));
+```
+
+### `CenterlineVectorizer`
 
 中心線アルゴリズムで、ラスター画像をベクター画像に変換する。
 
@@ -189,6 +293,16 @@ run("hello.js")
 | `v.preservePaintedAreas` | 塗り領域を保存するか？ 真偽値フラグ |
 | `v.addBorder` | 境界線を追加するか？ 真偽値フラグ |
 
+#### サンプル
+
+```
+a = new Image("c:/path/to/images/A.tif");
+
+v = new CenterlineVectorizer();
+v.preservePaintedAreas = true;
+view(v.vectorize(a));
+```
+
 ### `Rasterizer`
 
 ベクター画像をラスター画像に変換する。
@@ -205,6 +319,19 @@ run("hello.js")
 | `r.yres` | 縦方向の解像度 |
 | `r.dpi` | DPI |
 
+#### サンプル
+
+```
+a = new Level("c:/path/to/images/A.pli");
+
+r = new Rasterizer();
+r.xres = 768;
+r.yres = 576;
+r.dpi = 40;
+r.colorMapped = true;
+view(r.rasterize(a));
+```
+
 ### `Renderer`
 
 シーン、セル、画像をレンダリングする。
@@ -219,3 +346,13 @@ run("hello.js")
 | --- | --- |
 | `r.columns` | レンダリングしたいタイムシートの列番号の配列 |
 | `r.frames` | レンダリングしたいタイムシートの行番号の配列 |
+
+#### サンプル
+
+```
+scene = new Scene("c:/path/to/scenes/test.tnz");
+
+r = new Renderer();
+output = r.renderScene(scene);
+output.save("c:/path/to/outputs/test..tif");
+```
