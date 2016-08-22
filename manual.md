@@ -63,8 +63,8 @@ run("hello.js")
 | --- | --- |
 | `image = new Image()` | 空の画像を構築する |
 | `image = new Image(filename)` | コンストラクタ。引数で与えられた `filename` (`String`) の画像を読み込む |
-| `image.load(filename)` | `filename` (`String`) の画像を保存する |
-| `image.save(filename)` | `filename` (`String`) の画像を読み込む |
+| `image.load(filename)` | `filename` (`String`) の画像を読み込む |
+| `image.save(filename)` | `filename` (`String`) に画像を保存する |
 
 | 属性 | 内容 | 備考 |
 | --- | --- | --- |
@@ -75,16 +75,16 @@ run("hello.js")
 
 ### `Level`
 
-セル (`Image` を複数含む) を表現するオブジェクト。
+レベル (`Image` を複数含む) を表現するオブジェクト。
 `tlv`、`pli` あるいは一般の画像ファイルを扱える。
 `view(level)` で可視化できる。
 
 | メソッド | 内容 |
 | --- | --- |
-| `level = new Level()` | 空のセルを構築する |
-| `level = new Level(filename)` | コンストラクタ。引数で与えられた `filename` (`String`) のセルを読み込む |
-| `level.load(filename)` | `filename` (`String`) のセルを保存する |
-| `level.save(filename)` | `filename` (`String`) のセルを読み込む |
+| `level = new Level()` | 空のレベルを構築する |
+| `level = new Level(filename)` | コンストラクタ。引数で与えられた `filename` (`String`) のレベルを読み込む |
+| `level.load(filename)` | `filename` (`String`) のレベルを読み込む |
+| `level.save(filename)` | `filename` (`String`) にレベルを保存する |
 | `level.getFrameIds()` | `frameId` の配列を取得する |
 | `level.getFrame(frameId)` | `frameId` に対応する `Image` を取得する。存在しないときは `undefined` になる |
 | `level.getFrameByIndex(index)` | `index` 番目の `Image` を取得する。`index` は `[0, level.frameCount)` の範囲が有効 |
@@ -92,7 +92,7 @@ run("hello.js")
 
 | 属性 | 内容 | 備考 |
 | --- | --- | --- |
-| `level.name` | セル名 | Read / Write |
+| `level.name` | レベル名 | Read / Write |
 | `level.path` | ファイルパス | Read / Write |
 | `level.frameCount` | フレーム数 | Read Only |
 | `level.type` | レベルタイプ: `"Empty"` or `"Raster"` or `"ToonzRaster"` or `"Vector"` | Read Only |
@@ -100,6 +100,25 @@ run("hello.js")
 ### `Scene`
 
 シーンを表現するオブジェクト。
+
+| メソッド | 内容 |
+| --- | --- |
+| `scene = new Scene()` |  |
+| `scene = new Scene(filename)` | コンストラクタ。引数で与えられた `filename` (`String`) のシーンを読み込む |
+| `scene.load(filename)` | `filename` (`String`) のシーンを読み込む |
+| `scene.save(filename)` | `filename` (`String`) にシーンを保存する |
+| `scene.setCel(row, col, cell)` | タイムシートの `row` 行 `col` 列にセルを設定する。`cell` は、レベル `level` (`Level`) とその中の フレーム番号 `fid` (整数) をプロパティとしてもつ `Object`。削除したいときは、`cell` に `undefined` を指定する |
+| `scene.getCel(row, col)` | タイムシートの `row` 行 `col` 列のセルを取得する |
+| `scene.insertColumn(col)` | タイムシートに `col` 列を追加する |
+| `scene.deleteColumn(col)` | タイムシートの `col` 列を削除する |
+| `scene.getLevels()` | シーンに含まれるすべてのレベルを配列として取得する |
+| `scene.newLevel(type, name)` | あたらしくレベルを作成して返す。`type` は "Raster" or "ToonzRaster" or "Vector" を指定する。 |
+| `scene.loadLevel(name, path)` | `name` としてレベルを `path` (絶対パス) から読み込む |
+
+| 属性 | 内容 | 備考 |
+| --- | --- | --- |
+| `scene.frameCount` | タイムシートの行数 | Read Only |
+| `scene.columnCount` | タイムシートの列数 | Read Only |
 
 ### `Transform`
 
