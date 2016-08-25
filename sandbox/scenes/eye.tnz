@@ -6,10 +6,10 @@
     <cameras>
       <camera>
         <cameraSize>
-          36 20.25 
+          20.6111 11.5938 
         </cameraSize>
         <cameraRes>
-          1920 1080 
+          371 209 
         </cameraRes>
         <cameraXPrevalence>
           1 
@@ -351,14 +351,6 @@
         
       </level>
       <level id='2'>
-        C 
-        <info dpiType="image"/>
-        <path>
-          "+drawings\\C.tlv"
-        </path>
-        
-      </level>
-      <level id='3'>
         B 
         <info dpiType="image"/>
         <path>
@@ -370,7 +362,7 @@
     </levels>
     <folder name="Cast" type="default">
       <levels>
-        <level id='1'/><level id='2'/><level id='3'/>
+        <level id='2'/><level id='1'/>
       </levels>
       </folder>
     <folder name="Audio">
@@ -378,7 +370,7 @@
     </levelSet>
   <xsheet>
     <columns>
-      <levelColumn id='4'>
+      <levelColumn id='3'>
         
         <status>
           0 
@@ -389,12 +381,15 @@
           </cell>
           </cells>
         <fx>
-          <Toonz_columnFx id='5'>
+          <Toonz_columnFx id='4'>
             
             <params>
               </params>
             <ports>
               </ports>
+            <dagNodePos>
+              25005 25005 
+            </dagNodePos>
             <numberId>
               0 
             </numberId>
@@ -413,23 +408,26 @@
         </fx>
         
       </levelColumn>
-      <levelColumn id='6'>
+      <levelColumn id='5'>
         
         <status>
           0 
         </status>
         <cells>
           <cell>
-            0 1 <level id='3'/>0001 0 
+            0 1 <level id='2'/>0001 0 
           </cell>
           </cells>
         <fx>
-          <Toonz_columnFx id='7'>
+          <Toonz_columnFx id='6'>
             
             <params>
               </params>
             <ports>
               </ports>
+            <dagNodePos>
+              25005 24955 
+            </dagNodePos>
             <numberId>
               0 
             </numberId>
@@ -463,6 +461,26 @@
         <status>
           0 
         </status>
+        <x>
+          <default>
+            0 
+          </default>
+          <keyframes>
+            <L>
+              0 -0.220851 
+            </L>
+            </keyframes>
+          </x>
+        <y>
+          <default>
+            0 
+          </default>
+          <keyframes>
+            <L>
+              0 1.82202 
+            </L>
+            </keyframes>
+          </y>
         <sx>
           <default>
             1 
@@ -483,10 +501,10 @@
         </nodePos>
         <camera>
           <cameraSize>
-            36 20.25 
+            20.6111 11.5938 
           </cameraSize>
           <cameraRes>
-            1920 1080 
+            371 209 
           </cameraRes>
           <cameraXPrevalence>
             1 
@@ -555,7 +573,7 @@
           </default>
           </sc>
         <nodePos>
-          1.234e+009 5.678e+009 
+          24620 25500 
         </nodePos>
         </pegbar>
       <pegbar id="Col2">
@@ -586,7 +604,7 @@
           </default>
           </sc>
         <nodePos>
-          1.234e+009 5.678e+009 
+          24620 25450 
         </nodePos>
         </pegbar>
       <grid_dimension>
@@ -596,14 +614,14 @@
     <fxnodes>
       <terminal>
         <fxnode>
-          <Toonz_columnFx id='5'/>
+          <Toonz_columnFx id='4'/>
         </fxnode>
         <fxnode>
-          <Toonz_columnFx id='7'/>
+          <Toonz_columnFx id='6'/>
         </fxnode>
         </terminal>
       <xsheet>
-        <Toonz_xsheetFx id='8'>
+        <Toonz_xsheetFx id='7'>
           
           <params>
             </params>
@@ -629,13 +647,13 @@
         
       </xsheet>
       <output>
-        <Toonz_outputFx id='9'>
+        <Toonz_outputFx id='8'>
           
           <params>
             </params>
           <ports>
             <source>
-              <Toonz_xsheetFx id='8'/>
+              <Toonz_xsheetFx id='7'/>
             </source>
             </ports>
           <dagNodePos>
@@ -667,5 +685,7 @@
     "| #1   22 8 16   18:10     479B6Z1     DELL            |"
     "| #2   22 8 16   18:12     479B6Z1     DELL            |"
     "| #3   22 8 16   18:36     479B6Z1     DELL            |"
+    "| #4   25 8 16   16:13     S-KITAOKA-LEshinya_kitaoka  |"
+    "| #5   25 8 16   16:24     S-KITAOKA-LEshinya_kitaoka  |"
   </history>
   </tnz>
